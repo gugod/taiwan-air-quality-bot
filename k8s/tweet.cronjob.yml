@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tweet-taiwan-air-quality
+spec:
+  schedule: "0 8 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: tweet-taiwan-air-quality
+            image: gugod/taiwan-air-quality-bot:latest
+            imagePullPolicy: IfNotPresent
+            command:
+            - perl
+            - /app/bin/tweet.pl
+          restartPolicy: OnFailure
